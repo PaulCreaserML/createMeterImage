@@ -48,8 +48,8 @@ def image_add_line(  np_image, x_m, y_m, length, angle, shade=255, thickness=1):
 
 def _face( diameter, angle, needle_len, back_shade=255, needle_shade=0, thickness=1 ):
   np_image = np.full( ( ( diameter) , ( diameter), 3), back_shade )
-  x_m = int(diameter - 10 )
-  y_m = int(diameter - 10)
+  x_m = int(diameter - 46 )
+  y_m = int(diameter - 46)
   image_add_line(  np_image, x_m, y_m, needle_len, angle, shade=needle_shade, thickness=thickness )
   image = tf.convert_to_tensor( np_image, tf.float32 )
   image = tf.cast( image, dtype=tf.uint8 )
@@ -61,7 +61,7 @@ def face_gen( sub_dir, file_handle, diameter, angle_limit, needle_len, thickness
     if not os.path.isdir(full_dir):
         os.mkdir(full_dir)
 
-    for angle in range(0, angle_limit ):
+    for angle in range(0, angle_limit+1, 2 ):
         image = _face( diameter, angle, needle_len, thickness=thickness )
         filename = "meter_" + str(angle) + "_" +  str(needle_len) + "_" + str(thickness) + ".png"
         filename_path = os.path.join(sub_dir, filename)
@@ -72,7 +72,7 @@ def face_gen( sub_dir, file_handle, diameter, angle_limit, needle_len, thickness
 
 def meterface_gen( dir_name, file_handle, diameter, needle_len_min=50, needle_len_max=70, thickness_max=1 ):
   for thickness in range(  1, thickness_max+1):
-    for needle_len in range(  int( diameter*needle_len_min/100 ) , int( diameter*needle_len_max/100 ), 5):
+    for needle_len in range(  int( diameter*needle_len_min/100 ) , int( diameter*needle_len_max/100 ), 2):
      face_gen( dir_name, file_handle, diameter, 90, needle_len, thickness=thickness )
 
 
