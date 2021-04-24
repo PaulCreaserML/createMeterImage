@@ -65,7 +65,7 @@ def face_gen( meterimage, sub_dir, file_handle, diameter, angle_limit, needle_le
     if not os.path.isdir(full_dir):
         os.mkdir(full_dir)
 
-    for angle in range(0, angle_limit+1, 5 ):
+    for angle in range(0, angle_limit+1, 2 ):
         image = _face( meterimage, diameter, angle, needle_len, thickness=thickness )
         filename = "meter_" + str(angle) + "_" +  str(needle_len) + "_" + str(thickness) + ".png"
         filename_path = os.path.join(sub_dir, filename)
