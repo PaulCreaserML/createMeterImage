@@ -69,7 +69,7 @@ def face_gen( meterimage, sub_dir, file_handle, diameter, angle_limit, needle_le
         image = _face( meterimage, diameter, angle, needle_len, thickness=thickness )
         filename = "meter_" + str(angle) + "_" +  str(needle_len) + "_" + str(thickness) + ".png"
         filename_path = os.path.join(sub_dir, filename)
-        csv_line =  filename_path + "," + str(angle/angle_limit)
+        csv_line =  filename_path + "," + str( (angle+1)/(angle_limit+2))
         csv_line += "\n"
         file_handle.write(csv_line)
         tensor_to_png( image, filename_path )
@@ -88,6 +88,7 @@ def meter_gen_csv( face, dir_name, csv_file, diameter, angle_limit, needle_len_m
     image = tf.keras.preprocessing.image.load_img(face)
     image = tf.keras.preprocessing.image.img_to_array(image)
     image = tf.image.resize(image, [ diameter, diameter] )
+    image = (image/1.2) + 2
     image = tf.cast( image, dtype=tf.uint8 )
 
     base_dir = os.getcwd()
