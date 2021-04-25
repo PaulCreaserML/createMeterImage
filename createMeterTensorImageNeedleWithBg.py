@@ -65,11 +65,11 @@ def face_gen( meterimage, sub_dir, file_handle, diameter, angle_limit, needle_le
     if not os.path.isdir(full_dir):
         os.mkdir(full_dir)
 
-    for angle in range(0, angle_limit+1, 2 ):
+    for angle in range(0, angle_limit+1, 1):
         image = _face( meterimage, diameter, angle, needle_len, thickness=thickness )
         filename = "meter_" + str(angle) + "_" +  str(needle_len) + "_" + str(thickness) + ".png"
         filename_path = os.path.join(sub_dir, filename)
-        csv_line =  filename_path + "," + str( (angle+1)/(angle_limit+2))
+        csv_line =  filename_path + "," + str( (angle)/(angle_limit))
         csv_line += "\n"
         file_handle.write(csv_line)
         tensor_to_png( image, filename_path )
